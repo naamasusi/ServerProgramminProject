@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Studentlist</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <link rel="stylesheet" type="text/css" href="css/addstudent.css">
+   <style>
+   	   	body {
+    		margin: 0;
+    		padding: 0;
+    		background: url(KUVAT/pageTwo.jpg);
+    		background-size: cover;
+    		background-attachment: fixed;
+    		background-position: center;
+    		font-family: sans-serif;
+		}
+   
+   </style>
+</head>
+<body>
+
+	<div class="loginbox" sec:authorize="hasAuthority('ADMIN')">
+	<img src="kuvat/GitHubAvatar.jpg" class="avatar">
+	<h1>Create Events:</h1>
+	
+		<form th:object="${event}" th:action="@{save}" action="#" method="post">
+		
+			<p>Event Type</p>
+			
+			<div style="clear: both; display: block; height: 10px;"></div>
+			
+		  	<select id="Clist" th:field="*{category}" class="form-control">
+       			<option th:each="category: ${categories}" th:value="${category.categoryId}" th:text="${category.name}"></option>
+    		 </select>
+			
+			<div style="clear: both; display: block; height: 10px;"></div>
+			
+		  	<p>Location</p>
+			<input type="text" id="location" th:field="*{location}" />
+
+		  	<p>Date</p>
+			<input type="date" th:field="*{date}" />
+								
+		  	<p>Time</p>
+			<input type="time" id="time" th:field="*{time}" /> 
+			
+			<div style="clear: both; display: block; height: 10px;"></div>
+			
+			<input type="submit" value="Save"></input>
+			
+		</form>
+	</div>
+	
+	<div class="loginbox" sec:authorize="hasAuthority('USER')">
+	
+		<h1>Unsufficient user rights!</h1>
+		
+		<form th:action="@{/eventlist}" method="post">
+		
+			<p align="center" style="color: #ffc107;">User´s cannot create events. Only team manager, coach and other staff can. Please return with the button to the Event page</p>
+			
+			<div style="clear: both; display: block; height: 40px;"></div>
+			
+			<input type="submit" value="Return"></input>
+			
+		</form>
+
+		<a th:href="@{/eventlist.html}">Contact your team leaders to create events!</a><br>
+		
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add student</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link type="text/css" rel="stylesheet" th:href="@{css/bootstrap.min.css}" />
+	<link rel="stylesheet" type="text/css" href="css/login.css">
+	
+	   <style>
+    	 body {
+    		margin: 0;
+   			padding: 0;
+    		background: url(kuvat/LOGIN.jpg);
+    		background-size: cover;
+    		background-attachment: fixed;
+    		background-position: center;
+    		font-family: sans-serif;
+		}
+    </style>
+</head>
+<body>
+	
+	<div class="loginbox">
+            
+            <img src="kuvat/GitHubAvatar.jpg" class="avatar">
+            <h1>Sign Up</h1>
+            
+            <form th:object="${signupform}" th:action="@{/saveuser}" action="#" method="post">
+			<div>
+				<label> Username :<input type="text" th:field="*{username}" class="form-control"/></label>
+				<p th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</p>	
+			</div>
+			<div>
+				<label> Password :<input type="password" th:field="*{password}" class="form-control"/></label>
+				<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</p>	
+			</div>
+			<div>
+				<label> Re-type Password: <input type="password" th:field="*{passwordCheck}" class="form-control"/></label>
+				<p th:if="${#fields.hasErrors('passwordCheck')}" th:errors="*{passwordCheck}">Password Match Error</p>	
+			</div>
+			
+			<input type="submit" class="btn btn-success" value="Signup"></input>		
+		</form>
+
+        </div>
+</body>
+</html>

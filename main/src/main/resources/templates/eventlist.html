@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>Eventlist</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
+	
+	<link rel="stylesheet" type="text/css" href="css/studentlist.css">
+	<style>
+		body {
+    		margin: 0;
+    		padding: 0;
+    		background: url(kuvat/LOGIN.jpg);
+    		background-size: cover;
+    		background-attachment: fixed;
+    		background-position: center;
+    		font-family: sans-serif;
+		}
+	</style>
+	
+</head>
+<body>
+	<div class="loginbox1">
+	<img src="kuvat/GitHubAvatar.jpg" class="avatar1">
+	<h1 align="center">Sport Events</h1>
+	<br>
+	<p align="center" th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]</p>
+	<br>
+    <table id="eventTable">
+		<tr>
+		    <th class="th-sm">Event Type</th>
+		    <th>Location</th>
+		    <th>Date</th>
+		    <th sec:authorize="hasRole('ADMIN')">Delete Event</th>
+		</tr>  
+    	<tr th:each = "event : ${events}">
+    		<td th:text="${event.category.name}"></td> 	
+    		<td th:text="${event.location}"></td>
+    		<td th:text="${event.date}  + ' at ' + ${event.time}"></td>		
+ 			<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete/{id}(id=${event.id})}" class="btn btn-danger">Delete</a></td>   		
+    	</tr>
+     </table>
+
+    <div style="clear: both; display: block; height: 30px;"></div>
+     
+     <div style="clear: both; display: block; height: 20px;"></div>
+	
+	<form sec:authorize="hasAuthority('ADMIN')" id="addEvents" th:action="@{/add}" method="post">
+		<input type="submit" value="Create Events"/>
+	</form>
+	
+	
+	</div>
+	
+	<form id="logout" th:action="@{/logout}" method="post">
+		<input type="submit" value="Sign Out" class="btn btn-danger"/>
+	</form>
+	
+	<script>
+
+	</script>
+	
+</body>
+</html>
